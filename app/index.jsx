@@ -1,20 +1,19 @@
 // app/index.jsx
-import { useFocusEffect, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
+import { useEffect } from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
-import { useCallback } from "react";
 
 export default function Index() {
   const router = useRouter();
 
-  useFocusEffect(
-    useCallback(() => {
-      router.replace("/login");
-    }, [])
-  );
+  useEffect(() => {
+    // 🚀 Redirect to Welcome Page only
+    router.replace("/welcomepage");
+  }, []);
 
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color="#4A90E2" />
+      <ActivityIndicator size="large" color="#FFD700" /> 
     </View>
   );
 }

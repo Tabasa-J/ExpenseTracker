@@ -232,8 +232,9 @@ export default function ExpenseTracker() {
               {item.createdAt && (
                 <Text style={[styles.timeOnly, { color: darkMode ? "#aaa" : "#777" }]}>
                   {new Date(item.createdAt).toLocaleTimeString([], {
-                    hour: "2-digit",
+                    hour: "numeric",
                     minute: "2-digit",
+                    hour12: true,
                   })}
                 </Text>
               )}
@@ -267,7 +268,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     
   },
-  title: { fontSize: 24, fontWeight: "bold" },
+  title: { fontSize: 28, fontWeight: "bold" },
   totalText: { fontSize: 18, fontWeight: "600", marginTop: 4 },
   menuButton: { fontSize: 24, color: "#FFD700", paddingHorizontal: 10 },
   dropdown: {

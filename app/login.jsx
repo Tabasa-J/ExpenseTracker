@@ -42,8 +42,13 @@ export default function Login() {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={styles.container}
       >
+        {/* 🔙 Back Button */}
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <Text style={styles.backText}>Back</Text>
+        </TouchableOpacity>
+
         <View style={styles.card}>
-          <Text style={styles.title}>Welcome Back</Text>
+          <Text style={styles.title}>Login your Account</Text>
           <Text style={styles.subtitle}>Login to track your expenses ✨</Text>
 
           <TextInput
@@ -85,6 +90,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 16,
+  },
+  backButton: {
+    position: "absolute",
+    top: 50, // safe area for Android/iOS
+    left: 20,
+    padding: 8,
+    zIndex: 10,
+  },
+  backText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#FFD700",
   },
   card: {
     width: "100%",
