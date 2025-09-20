@@ -42,7 +42,7 @@ export default function Login() {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={styles.container}
       >
-        {/* 🔙 Back Button */}
+        
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
           <Text style={styles.backText}>Back</Text>
         </TouchableOpacity>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
-    top: 50, // safe area for Android/iOS
+    top: 50, 
     left: 20,
     padding: 8,
     zIndex: 10,

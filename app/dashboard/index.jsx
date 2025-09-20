@@ -38,7 +38,6 @@ export default function ExpenseTracker() {
 
   const router = useRouter();
 
-  // ✅ Real-time listener for user’s expenses
   useEffect(() => {
     if (!auth.currentUser) return;
 
@@ -113,7 +112,7 @@ export default function ExpenseTracker() {
     }
   };
 
-  // ✅ Auto total
+ 
   const totalExpenses = expenses.reduce((sum, item) => sum + (item.amount || 0), 0);
 
   return (
@@ -123,7 +122,7 @@ export default function ExpenseTracker() {
         { backgroundColor: darkMode ? "#121212" : "#fff" },
       ]}
     >
-      {/* Top bar with menu */}
+      
       <View style={styles.topBar}>
         <View>
           <Text style={[styles.title, { color: darkMode ? "#FFD700" : "#121212" }]}>
@@ -139,7 +138,7 @@ export default function ExpenseTracker() {
         </TouchableOpacity>
       </View>
 
-      {/* Dropdown Menu */}
+      
       {showMenu && (
         <View style={styles.dropdown}>
           <View style={styles.menuItem}>
@@ -153,7 +152,7 @@ export default function ExpenseTracker() {
         </View>
       )}
 
-      {/* Add Expense Card */}
+    
       <View
         style={[
           styles.addCard,
@@ -206,7 +205,7 @@ export default function ExpenseTracker() {
         />
       )}
 
-      {/* Expense List */}
+      
       <FlatList
         data={expenses}
         keyExtractor={(item) => item.id}
@@ -227,7 +226,7 @@ export default function ExpenseTracker() {
               {new Date(item.date).toDateString()}
             </Text>
 
-            {/* Bottom row with time + buttons */}
+           
             <View style={styles.cardBottom}>
               {item.createdAt && (
                 <Text style={[styles.timeOnly, { color: darkMode ? "#aaa" : "#777" }]}>

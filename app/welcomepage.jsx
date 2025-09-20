@@ -8,21 +8,20 @@ export default function Welcome() {
 
   return (
     <View style={styles.container}>
-      {/* Big Logo */}
+      
       <Image
-        source={require("../assets/images/logo.png")} // 👈 place your logo here
+        source={require("../assets/images/logo.png")} 
         style={styles.logo}
       />
 
-      {/* App Name */}
+     
       <Text style={styles.title}>My Expense Tracker</Text>
 
-      {/* Tagline */}
       <Text style={styles.subtitle}>
         Track your expenses easily and take control of your budget.
       </Text>
 
-      {/* Get Started Button */}
+      
       <TouchableOpacity
         style={styles.button}
         onPress={() => router.push("/login")}
@@ -36,7 +35,7 @@ export default function Welcome() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000", // black background
+    backgroundColor: "#000", 
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    color: "#FFD700", // golden yellow
+    color: "#FFD700", 
     marginBottom: 10,
   },
   subtitle: {
@@ -61,13 +60,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   button: {
-    backgroundColor: "#FFD700", // golden yellow button
+    backgroundColor: "#FFD700", 
     paddingVertical: 14,
     paddingHorizontal: 50,
     borderRadius: 30,
   },
   buttonText: {
-    color: "#000", // black text on yellow
+    color: "#000", 
     fontSize: 18,
     fontWeight: "bold",
   },

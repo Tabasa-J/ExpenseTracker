@@ -7,7 +7,7 @@ export default function Index() {
   const router = useRouter();
 
   useEffect(() => {
-    // 🚀 Redirect to Welcome Page only
+  
     router.replace("/welcomepage");
   }, []);
 

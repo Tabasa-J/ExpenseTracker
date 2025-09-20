@@ -14,9 +14,9 @@ export default function AddExpense() {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const router = useRouter();
-  const { id } = useLocalSearchParams(); // 🔑 expense id if editing
+  const { id } = useLocalSearchParams(); 
 
-  // ✅ Load expense data if editing
+  
   useEffect(() => {
     const fetchExpense = async () => {
       if (id) {
@@ -44,7 +44,7 @@ export default function AddExpense() {
 
     try {
       if (id) {
-        // ✅ Update existing expense
+        
         const docRef = doc(db, "expenses", id);
         await updateDoc(docRef, {
           title,
@@ -53,7 +53,7 @@ export default function AddExpense() {
         });
         alert("Expense updated!");
       } else {
-        // ✅ Add new expense
+        
         await addDoc(collection(db, "expenses"), {
           title,
           amount: parseFloat(amount),
@@ -148,4 +148,4 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   saveText: { fontSize: 16, fontWeight: "bold", color: "#121212" },
-});
+}); 
