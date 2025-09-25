@@ -30,8 +30,8 @@ export default function Signup() {
     setLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, email.trim(), password);
-      Alert.alert("Success", "Account created successfully 🎉");
-      router.replace("/dashboard");
+      Alert.alert("Success", "Account created successfully" );
+      router.replace("/login");
     } catch (error) {
       const message = (error && error.message) || String(error);
       Alert.alert("Signup Error", message);

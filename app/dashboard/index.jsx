@@ -112,8 +112,30 @@ export default function ExpenseTracker() {
     }
   };
 
- 
-  const totalExpenses = expenses.reduce((sum, item) => sum + (item.amount || 0), 0);
+  // ✅ Expense calculations
+  const today = new Date();
+  const startOfDay = new Date(today.setHours(0, 0, 0, 0));
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - today.getDay()); // Sunday
+  startOfWeek.setHours(0, 0, 0, 0);
+  const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+  const dailyTotal = expenses
+    .filter((item) => new Date(item.date) >= startOfDay)
+    .reduce((sum, item) => sum + (item.amount || 0), 0);
+
+  const weeklyTotal = expenses
+    .filter((item) => new Date(item.date) >= startOfWeek)
+    .reduce((sum, item) => sum + (item.amount || 0), 0);
+
+  const monthlyTotal = expenses
+    .filter((item) => new Date(item.date) >= startOfMonth)
+    .reduce((sum, item) => sum + (item.amount || 0), 0);
+
+  const totalExpenses = expenses.reduce(
+    (sum, item) => sum + (item.amount || 0),
+    0
+  );
 
   return (
     <View
@@ -122,14 +144,16 @@ export default function ExpenseTracker() {
         { backgroundColor: darkMode ? "#121212" : "#fff" },
       ]}
     >
-      
+      {/* Top bar */}
       <View style={styles.topBar}>
         <View>
-          <Text style={[styles.title, { color: darkMode ? "#FFD700" : "#121212" }]}>
+          <Text
+            style={[
+              styles.title,
+              { color: darkMode ? "#FFD700" : "#121212" },
+            ]}
+          >
             Expense Tracker
-          </Text>
-          <Text style={[styles.totalText, { color: darkMode ? "#fff" : "#333" }]}>
-            Total Expense: ₱{totalExpenses.toFixed(2)}
           </Text>
         </View>
 
@@ -138,7 +162,30 @@ export default function ExpenseTracker() {
         </TouchableOpacity>
       </View>
 
-      
+      {/* Summary cards */}
+      <View style={styles.summaryContainer}>
+        <View style={styles.summaryCard}>
+          <Text style={styles.summaryLabel}>Today</Text>
+          <Text style={styles.summaryValue}>₱{dailyTotal.toFixed(2)}</Text>
+        </View>
+
+        <View style={styles.summaryCard}>
+          <Text style={styles.summaryLabel}>This Week</Text>
+          <Text style={styles.summaryValue}>₱{weeklyTotal.toFixed(2)}</Text>
+        </View>
+
+        <View style={styles.summaryCard}>
+          <Text style={styles.summaryLabel}>This Month</Text>
+          <Text style={styles.summaryValue}>₱{monthlyTotal.toFixed(2)}</Text>
+        </View>
+
+        <View style={styles.summaryCard}>
+          <Text style={styles.summaryLabel}>All Time</Text>
+          <Text style={styles.summaryValue}>₱{totalExpenses.toFixed(2)}</Text>
+        </View>
+      </View>
+
+      {/* Dropdown menu */}
       {showMenu && (
         <View style={styles.dropdown}>
           <View style={styles.menuItem}>
@@ -147,12 +194,14 @@ export default function ExpenseTracker() {
           </View>
 
           <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
-            <Text style={[styles.menuText, { color: "#c62828" }]}>🚪 Logout</Text>
+            <Text style={[styles.menuText, { color: "#c62828" }]}>
+              🚪 Logout
+            </Text>
           </TouchableOpacity>
         </View>
       )}
 
-    
+      {/* Add Expense Card */}
       <View
         style={[
           styles.addCard,
@@ -177,7 +226,10 @@ export default function ExpenseTracker() {
         />
 
         <TouchableOpacity
-          style={[styles.dateButton, { backgroundColor: darkMode ? "#333" : "#eee" }]}
+          style={[
+            styles.dateButton,
+            { backgroundColor: darkMode ? "#333" : "#eee" },
+          ]}
           onPress={() => setShowPicker(true)}
         >
           <Text style={{ color: darkMode ? "#FFD700" : "#121212" }}>
@@ -205,7 +257,7 @@ export default function ExpenseTracker() {
         />
       )}
 
-      
+      {/* Expense list */}
       <FlatList
         data={expenses}
         keyExtractor={(item) => item.id}
@@ -219,17 +271,31 @@ export default function ExpenseTracker() {
             <Text style={[styles.cardTitle, { color: "#FFD700" }]}>
               {item.title}
             </Text>
-            <Text style={[styles.cardAmount, { color: darkMode ? "#fff" : "#121212" }]}>
+            <Text
+              style={[
+                styles.cardAmount,
+                { color: darkMode ? "#fff" : "#121212" },
+              ]}
+            >
               ₱{item.amount}
             </Text>
-            <Text style={[styles.cardDate, { color: darkMode ? "#aaa" : "#555" }]}>
+            <Text
+              style={[
+                styles.cardDate,
+                { color: darkMode ? "#aaa" : "#555" },
+              ]}
+            >
               {new Date(item.date).toDateString()}
             </Text>
 
-           
             <View style={styles.cardBottom}>
               {item.createdAt && (
-                <Text style={[styles.timeOnly, { color: darkMode ? "#aaa" : "#777" }]}>
+                <Text
+                  style={[
+                    styles.timeOnly,
+                    { color: darkMode ? "#aaa" : "#777" },
+                  ]}
+                >
                   {new Date(item.createdAt).toLocaleTimeString([], {
                     hour: "numeric",
                     minute: "2-digit",
@@ -249,7 +315,12 @@ export default function ExpenseTracker() {
           </View>
         )}
         ListEmptyComponent={
-          <Text style={[styles.emptyText, { color: darkMode ? "#aaa" : "#888" }]}>
+          <Text
+            style={[
+              styles.emptyText,
+              { color: darkMode ? "#aaa" : "#888" },
+            ]}
+          >
             No expenses yet. Add one!
           </Text>
         }
@@ -265,11 +336,37 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 16,
-    
   },
   title: { fontSize: 28, fontWeight: "bold" },
   totalText: { fontSize: 18, fontWeight: "600", marginTop: 4 },
   menuButton: { fontSize: 24, color: "#FFD700", paddingHorizontal: 10 },
+
+  // ✅ New summary styles
+  summaryContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    marginBottom: 16,
+  },
+  summaryCard: {
+    width: "48%",
+    backgroundColor: "#FFD700",
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  summaryLabel: { fontSize: 14, color: "#333", fontWeight: "600" },
+  summaryValue: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#000",
+    marginTop: 4,
+  },
+
   dropdown: {
     backgroundColor: "#fff",
     borderRadius: 10,

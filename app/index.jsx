@@ -1,27 +1,7 @@
 // app/index.jsx
-import { useRouter } from "expo-router";
-import { useEffect } from "react";
-import { View, ActivityIndicator, StyleSheet } from "react-native";
+import { Redirect } from "expo-router";
 
 export default function Index() {
-  const router = useRouter();
-
-  useEffect(() => {
-  
-    router.replace("/welcomepage");
-  }, []);
-
-  return (
-    <View style={styles.container}>
-      <ActivityIndicator size="large" color="#FFD700" /> 
-    </View>
-  );
+  // Safe redirect – works on web + native
+  return <Redirect href="/welcomepage" />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
